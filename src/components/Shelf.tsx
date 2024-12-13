@@ -11,9 +11,9 @@ const Shelf: React.FC<ShelfProps> = ({ collection }) => {
 		<div className="flex border m-2 h-24">
       {/* render each book in collection */}
 			{collection.map((book: BookProps, id: number) => (
-				<div className="border bg-red-600" key={id}>
-          <Book name={book.name} author={book.author} />
-				</div>
+				<>
+          <Book name={book.name} author={book.author} id={id} />
+				</>
 			))}
 		</div>
 	);
