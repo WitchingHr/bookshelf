@@ -5,7 +5,7 @@ export interface BookProps {
 	name: string;
 	author: string;
 	// cover: string;
-	id: number;
+	id?: number;
 }
 
 // renders books on shelf
@@ -16,7 +16,7 @@ const Book: React.FC<BookProps> = ({ name, author, id }) => {
 	// conditional class dependent on hover state
 	const bookClass = classNames({
 		'border transition duration-200': true,
-		"[writing-mode:vertical-lr] truncate bg-red-500": !isHovered,
+		"[writing-mode:vertical-lr] truncate bg-red-500 py-2 px-1 rounded": !isHovered,
 		"bg-blue-500": isHovered,
 	});
 

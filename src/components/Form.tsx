@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useState } from "react";
+import { type Dispatch, type SetStateAction, useRef, useState } from "react";
 import { type BookProps } from "./Book";
 
 interface FormProps {
@@ -21,7 +21,7 @@ const Form: React.FC<FormProps> = ({ collection, setCollection }) => {
 	function handleAuthorInputChange(event: any) {
 		setAuthor(event.target.value);
 	}
-
+	
 	// save input values as new book added to collection
 	function handleSumbit(event: any) {
 		event?.preventDefault();
@@ -30,31 +30,35 @@ const Form: React.FC<FormProps> = ({ collection, setCollection }) => {
 		// clear inputs
 		setName("");
 		setAuthor("");
+		inputRef.current?.focus();
 	}
+	
+	const inputRef = useRef(null);
 
 	return (
 		<div>
 			<form onSubmit={handleSumbit}>
         {/* name input */}
-				<label>
+				<label className="mx-2 text-white">
 					Name:
 					<input
+						ref={inputRef}
 						value={name}
 						onChange={handleNameInputChange}
 						type="text"
 						placeholder="Enter name"
-						className="border"
+						className="border px-1 ml-2 text-black rounded"
 					/>
 				</label>
         {/* author input */}
-				<label>
+				<label className="mx-2 text-white">
 					Author:
 					<input
 						value={author}
 						onChange={handleAuthorInputChange}
 						type="text"
 						placeholder="Enter author"
-						className="border"
+						className="border px-1 ml-2 text-black rounded"
 					/>
 				</label>
 				{/* render button if inputs have value */}
