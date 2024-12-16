@@ -15,22 +15,21 @@ const Book: React.FC<BookProps> = ({ name, author, id }) => {
 
 	// conditional class dependent on hover state
 	const bookClass = classNames({
-		'border transition duration-200': true,
-		"[writing-mode:vertical-lr] truncate bg-red-500 py-2 px-1 rounded": !isHovered,
+		"border py-2 px-2 rounded transition duration-200 [writing-mode:vertical-lr] truncate":
+			true,
+		"bg-red-500": !isHovered,
 		"bg-blue-500": isHovered,
 	});
 
 	return (
-		<div
+		<button
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 			className={bookClass}
 			key={id}
 		>
-			<p>{name}</p>
-			{/* hide author by default */}
-			{isHovered && <p>{author}</p>}
-		</div>
+			{name}
+		</button>
 	);
 };
 
