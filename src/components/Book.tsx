@@ -1,10 +1,11 @@
 import classNames from "classnames";
 import { useState } from "react";
+import { useModal } from "./ModalContext";
 
 export interface BookProps {
 	name: string;
 	author: string;
-	// cover: string;
+	cover?: string;
 	id?: number;
 }
 
@@ -21,10 +22,13 @@ const Book: React.FC<BookProps> = ({ name, author, id }) => {
 		"bg-blue-500": isHovered,
 	});
 
+	const { setModalData } = useModal();
+
 	return (
 		<button
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
+			onClick={() => setModalData({ name, author })}
 			className={bookClass}
 			key={id}
 		>
