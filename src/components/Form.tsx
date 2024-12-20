@@ -1,18 +1,15 @@
-import { type Dispatch, type SetStateAction, useRef, useState } from "react";
-import { type BookProps } from "./Book";
+import { useRef, useState } from "react";
+import { useCollection } from "./CollectionContext";
 
-interface FormProps {
-	collection: BookProps[];
-	setCollection: Dispatch<SetStateAction<BookProps[]>>;
-}
-
-type InputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => void;
+export type InputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => void;
 
 // form for adding books to the shelf
-const Form: React.FC<FormProps> = ({ collection, setCollection }) => {
+const Form: React.FC = () => {
 	// state for input values
 	const [name, setName] = useState<string>("");
 	const [author, setAuthor] = useState<string>("");
+
+	const {collection, setCollection} = useCollection();
 
 	// update name input value
 	const handleNameInputChange: InputChangeHandler = (event) => {
@@ -25,7 +22,7 @@ const Form: React.FC<FormProps> = ({ collection, setCollection }) => {
 	};
 
 	// save input values as new book added to collection
-	function handleSumbit(event: React.FormEvent<HTMLFormElement>): void {
+	function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
 		event?.preventDefault();
 		// add new book to collection
 		setCollection([...collection, { name, author }]);
@@ -40,7 +37,7 @@ const Form: React.FC<FormProps> = ({ collection, setCollection }) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	return (
-		<form onSubmit={handleSumbit}>
+		<form onSubmit={handleSubmit}>
 			{/* name input */}
 			<Input
 				label={"Name"}

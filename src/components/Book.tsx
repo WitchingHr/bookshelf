@@ -6,11 +6,10 @@ export interface BookProps {
 	name: string;
 	author: string;
 	cover?: string;
-	id?: number;
 }
 
 // renders books on shelf
-const Book: React.FC<BookProps> = ({ name, author, id }) => {
+const Book: React.FC<BookProps> = ({ name, author }) => {
 	// state for hover
 	const [isHovered, setIsHovered] = useState<boolean>(false);
 
@@ -22,15 +21,16 @@ const Book: React.FC<BookProps> = ({ name, author, id }) => {
 		"bg-blue-500": isHovered,
 	});
 
+	// for sending book info to modal
 	const { setModalData } = useModal();
 
 	return (
 		<button
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
+			// open modal on click send info to modal
 			onClick={() => setModalData({ name, author })}
 			className={bookClass}
-			key={id}
 		>
 			{name}
 		</button>
