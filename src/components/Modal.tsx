@@ -8,7 +8,7 @@ const Modal: React.FC = () => {
 	const { modalData, setModalData } = useModal();
 	const [name, setName] = useState<string | undefined>("");
 	const [author, setAuthor] = useState<string | undefined>("");
-	const {collection, setCollection} = useCollection();
+	const { collection, setCollection } = useCollection();
 
 	// hide modal by default
 	if (!modalData) return null;
@@ -45,14 +45,21 @@ const Modal: React.FC = () => {
 		setAuthor(event.target.value);
 	};
 
-	// save input values as new book added to collection
-	function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
-		event?.preventDefault();
-		setCollection([...collection, { name, author }]);
-		// clear inputs
-		setName("");
-		setAuthor("");
+	// find existing book in collection and update it
+	function handleSave() {
+		// handle null
+		if (!name || !author) return;
+		// map over collection and update book
+		const updatedCollection = collection.map((book) => {
+			if (book.name === modalData?.name && book.author === modalData.author) {
+				return { name, author };
+			}
+			return book;
+		});
+		setCollection(updatedCollection);
 		setEditModeOn(false);
+		// update modalData with new values
+		setModalData({ ...modalData, name, author });
 	}
 
 	return (
@@ -75,7 +82,7 @@ const Modal: React.FC = () => {
 					</>
 				) : (
 					// if edit mode on, render form to edit book info
-					<form onSubmit={handleSubmit}>
+					<form onSubmit={handleSave}>
 						<input
 							onChange={handleNameInputChange}
 							className="text-xl"
